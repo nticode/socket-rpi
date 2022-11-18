@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Can be what you want</title>
+    </head>
+
+    <body>
+        <button onclick="toggle('on')">on</button>
+        <button onclick="toggle('off')">off</button>
+    </body>
+
+    <script>
+        async function toggle(state) {
+            hostname = window.location.hostname;
+            port = window.location.port;
+            let res = await fetch(`http://${hostname}:${port}/api/${state}`, {method: 'POST'});
+            if (res.status === 200) {
+                console.log("Success");
+            } else {
+                console.log("Fail");
+            }
+        }
+    </script>
+</html>
