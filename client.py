@@ -10,7 +10,9 @@ server.listen(5)
 print("Server Online")
 
 data = None # Set the data to none
-RPi_Port = 18 # Sets Raspberry PI port
+RPI_Port = 18 # Sets Raspberry PI port
+GPIO.setmode(GPIO.BCM) # Sets GPIO mode
+GPIO.setup(RPI_Port, GPIO.OUT) # Setup Raspberry PI Port
 
 print(client_ip) # Makes it easier to find the IP address
 
