@@ -12,6 +12,8 @@ print("Server Online")
 data = None # Set the data to none
 RPi_Port = 18 # Sets Raspberry PI port
 
+print(client_ip) # Makes it easier to find the IP address
+
 while True: # Loop
     client, addr = server.accept() # Waits for connection
     data = client.recv(1024).decode() # Gets and decode data

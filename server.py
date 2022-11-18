@@ -1,6 +1,6 @@
 # Socket
 import socket # import socket library
-client_ip = "192.168.0.8" # Raspberry PI ip address
+client_ip = "" # Raspberry PI ip address
 client_port = 13000 # Socket port
 server = socket.socket() # Create socket server
 server.connect((client_ip, client_port)) # Connect socket server to client
