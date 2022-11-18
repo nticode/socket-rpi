@@ -1,27 +1,25 @@
-import socket
-import RPi.GPIO as GPIO
+# Socket
+import socket # import socket library
+client_ip = "192.168.0.8" # Raspberry PI ip address
+client_port = 13000 # Socket port
 
-client_ip = socket.gethostbyname(socket.gethostname()) # Ip address of Raspberry PI
-client_port = 13000 # The socket port
+# Website
+from flask import Flask, render_template, Response # Import flask library for html
+server_ip = "192.168.0.9" # Gets client IP address
+server_port = "1011" # Client Web Port
+app = Flask(__name__) # Creates Flask Application
 
-server = socket.socket()
-server.bind((client_ip, client_port))
-server.listen(5)
-print("Server Online")
 
-data = None # Set the data to none
-RPI_Port = 18 # Sets Raspberry PI port
-GPIO.setmode(GPIO.BCM) # Sets GPIO mode
-GPIO.setup(RPI_Port, GPIO.OUT) # Setup Raspberry PI Port
+@app.route("/") # Sets "http://{server_ip}:{server_port}/" to run main function
+def main():
+    return render_template("index.html") # renders index.html
 
-print(client_ip) # Makes it easier to find the IP address
+@app.route("/api/<state>", methods = ['POST']) # Listens for POST requests
+def on(state):
+    client = socket.socket() # Create socket client
+    client.connect((client_ip, client_port)) # Connect socket client to server
+    client.send(state.encode()) # Sends encoded <state> to server
+    client.close() # Closes socket client
+    return Response(status=200) # Returns status 200 to website
 
-while True: # Loop
-    client, addr = server.accept() # Waits for connection
-    data = client.recv(1024).decode() # Gets and decode data
-    client.close() # Close client connection
-
-    if data == "on": # Checks if data equals "on"
-        GPIO.output(18, GPIO.HIGH)
-    elif data == "off": # Checks if data equals "off"
-        GPIO.output(18, GPIO.LOW)
+app.run(server_ip, server_port) # Starts website
