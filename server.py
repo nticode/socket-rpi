@@ -1,4 +1,3 @@
-
 # Socket
 import socket
 server_ip = "" # Ip address of Raspberry PI
